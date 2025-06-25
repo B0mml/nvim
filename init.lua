@@ -96,8 +96,8 @@ vim.o.confirm = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>qo', vim.diagnostic.setloclist, { desc = 'Open location list' })
-vim.keymap.set('n', '<leader>qd', vim.diagnostic.setqflist, { desc = 'Open quickfix list' })
+vim.keymap.set('n', '<leader>qo', vim.diagnostic.setloclist, { desc = 'Diagnostic to location list' })
+vim.keymap.set('n', '<leader>qd', vim.diagnostic.setqflist, { desc = 'Diagnostics to quickfix' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -225,6 +225,7 @@ require('lazy').setup({
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     opts = {
+      preset = 'helix',
       -- delay between pressing a key and opening which-key (milliseconds)
       -- this setting is independent of vim.o.timeoutlen
       delay = 0,
@@ -279,6 +280,7 @@ require('lazy').setup({
         { '<leader>3', hidden = true },
         { '<leader>4', hidden = true },
         { '<leader>q', group = '[Q]uickfix' },
+        { '<leader>c', group = '[C]hatGPT' },
       },
     },
   },
@@ -604,9 +606,9 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- clangd = {},
-        -- gopls = {},
-        -- pyright = {},
-        -- rust_analyzer = {},
+        gopls = {},
+        pyright = {},
+        rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -868,20 +870,89 @@ require('lazy').setup({
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
-      require('mini.files').setup()
-      vim.keymap.set('n', '<leader>e', function()
+      require('mini.files').setup {
+        -- Disable preview by default
+        windows = {
+          preview = false, -- Changed from true to false
+          width_focus = 40,
+          width_nofocus = 15,
+          width_preview = 60,
+        },
+
+        -- Custom mappings
+        mappings = {
+          close = 'q',
+          go_in = 'l',
+          go_in_plus = 'L',
+          go_out = 'h',
+          go_out_plus = 'H',
+          mark_goto = "'",
+          mark_set = 'm',
+          reset = '<BS>',
+          reveal_cwd = '@',
+          show_help = 'g?',
+          synchronize = '=',
+          trim_left = '<',
+          trim_right = '>',
+        },
+      }
+
+      -- Toggle function
+      vim.keymap.set('n', '-', function()
         if not require('mini.files').close() then
           require('mini.files').open()
         end
       end, { desc = 'Open File [E]xplorer' })
 
-      require('mini.starter').setup()
+      -- Add cursor wrapping and preview toggle for mini.files
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'MiniFilesBufferCreate',
+        callback = function(args)
+          local buf_id = args.data.buf_id
 
-      require('mini.completion').setup()
+          -- Toggle preview with 'p' key
+          vim.keymap.set('n', 'p', function()
+            local config = require('mini.files').config
+            config.windows.preview = not config.windows.preview
+            require('mini.files').refresh { windows = { preview = config.windows.preview } }
+          end, { buffer = buf_id, desc = 'Toggle preview' })
+
+          -- Enable cursor wrapping for j/k navigation
+          vim.keymap.set('n', 'j', function()
+            local line = vim.api.nvim_win_get_cursor(0)[1]
+            local total_lines = vim.api.nvim_buf_line_count(buf_id)
+
+            if line >= total_lines then
+              -- At bottom, wrap to top
+              vim.api.nvim_win_set_cursor(0, { 1, 0 })
+            else
+              -- Normal j movement
+              vim.cmd 'normal! j'
+            end
+          end, { buffer = buf_id, desc = 'Move down (with wrap)' })
+
+          vim.keymap.set('n', 'k', function()
+            local line = vim.api.nvim_win_get_cursor(0)[1]
+
+            if line <= 1 then
+              -- At top, wrap to bottom
+              local total_lines = vim.api.nvim_buf_line_count(buf_id)
+              vim.api.nvim_win_set_cursor(0, { total_lines, 0 })
+            else
+              -- Normal k movement
+              vim.cmd 'normal! k'
+            end
+          end, { buffer = buf_id, desc = 'Move up (with wrap)' })
+        end,
+      })
+
+      -- require('mini.starter').setup()
     end,
   },
+
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+
     build = ':TSUpdate',
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
@@ -916,7 +987,7 @@ require('lazy').setup({
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   -- require 'kickstart.plugins.debug',
-  require 'kickstart.plugins.indent_line',
+  -- require 'kickstart.plugins.indent_line',
   require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',

@@ -105,4 +105,41 @@ return {
       { '<leader>4', '<cmd>Grapple select index=4<cr>', desc = 'Grapple select 4' },
     },
   },
+
+  {
+    'github/copilot.vim',
+    config = function()
+      vim.g.copilot_enabled = 0
+      -- Optional: Configure Copilot settings here
+    end,
+  },
+
+  {
+    'olimorris/codecompanion.nvim',
+    opts = {},
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
+    },
+    config = function()
+      require('codecompanion').setup {
+        strategies = {
+          chat = { adapter = 'copilot' },
+          inline = { adapter = 'copilot' },
+        },
+        -- No model specification - use Copilot's default
+      }
+
+      vim.keymap.set('n', '<leader>cc', '<cmd>CodeCompanionChat<cr>')
+      vim.keymap.set('n', '<leader>ci', '<cmd>CodeCompanion<cr>')
+      vim.keymap.set('v', '<leader>ca', '<cmd>CodeCompanionActions<cr>')
+    end,
+  },
+
+  {
+    'm4xshen/hardtime.nvim',
+    lazy = false,
+    dependencies = { 'MunifTanjim/nui.nvim' },
+    opts = {},
+  },
 }
