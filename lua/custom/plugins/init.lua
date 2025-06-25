@@ -86,14 +86,14 @@ return {
     },
     keys = {
       {
-        '<leader>gm',
+        "<leader>'m",
         function()
           require('grapple').toggle()
         end,
         desc = 'Grapple toggle',
       },
       {
-        '<leader>gM',
+        "<leader>'M",
         function()
           require('grapple').toggle_tags()
         end,
@@ -130,9 +130,9 @@ return {
         -- No model specification - use Copilot's default
       }
 
-      vim.keymap.set('n', '<leader>cc', '<cmd>CodeCompanionChat<cr>')
-      vim.keymap.set('n', '<leader>ci', '<cmd>CodeCompanion<cr>')
-      vim.keymap.set('v', '<leader>ca', '<cmd>CodeCompanionActions<cr>')
+      vim.keymap.set('n', '<leader>cc', '<cmd>CodeCompanionChat<cr>', { desc = 'CodeCompanion Chat' })
+      vim.keymap.set('n', '<leader>ci', '<cmd>CodeCompanion<cr>', { desc = 'CodeCompanion Inline' })
+      vim.keymap.set('n', '<leader>ca', '<cmd>CodeCompanionActions<cr>', { desc = 'CodeCompanion Actions' })
     end,
   },
 
@@ -140,6 +140,6 @@ return {
     'm4xshen/hardtime.nvim',
     lazy = false,
     dependencies = { 'MunifTanjim/nui.nvim' },
-    opts = {},
+    opts = { enabled = false },
   },
 }
