@@ -98,7 +98,6 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>qo', vim.diagnostic.setloclist, { desc = 'Diagnostic to location list' })
 vim.keymap.set('n', '<leader>qd', vim.diagnostic.setqflist, { desc = 'Diagnostics to quickfix' })
-
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
@@ -280,7 +279,7 @@ require('lazy').setup({
         { '<leader>3', hidden = true },
         { '<leader>4', hidden = true },
         { '<leader>q', group = 'Quickfix' },
-        { '<leader>c', group = 'ChatGPT' },
+        { '<leader>c', group = 'Copilot' },
         { "<leader>'", group = 'Grapple' },
         { '<leader>.', group = 'Scratch Buffer' },
         { '<leader>b', group = 'Buffer' },
@@ -720,7 +719,6 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
     end,
   },
 
@@ -881,6 +879,7 @@ require('lazy').setup({
       })
 
       -- require('mini.starter').setup()
+      require('mini.sessions').setup()
     end,
   },
 
