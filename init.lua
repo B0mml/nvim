@@ -880,17 +880,36 @@ require('lazy').setup({
       })
 
       -- require('mini.starter').setup()
-      require('mini.sessions').setup()
+      require('mini.sessions').setup {
+        force = { delete = true },
+      }
 
       vim.keymap.set('n', '<leader>ms', function()
-        MiniSessions.write()
-      end, { desc = 'Save session' })
+        local name = vim.fn.input 'New session name: '
+        if name ~= '' then
+          MiniSessions.write(name)
+        end
+      end, { desc = 'Save new session' })
+
+      vim.keymap.set('n', '<leader>mw', function()
+        if vim.v.this_session == '' then
+          local name = vim.fn.input 'Session name: '
+          if name ~= '' then
+            MiniSessions.write(name)
+          end
+        else
+          MiniSessions.write()
+        end
+      end, { desc = 'Write/overwrite session' })
+
       vim.keymap.set('n', '<leader>ml', function()
         MiniSessions.read()
       end, { desc = 'Load session' })
+
       vim.keymap.set('n', '<leader>md', function()
-        MiniSessions.delete()
+        MiniSessions.select 'delete'
       end, { desc = 'Delete session' })
+
       vim.keymap.set('n', '<leader>mp', function()
         MiniSessions.select()
       end, { desc = 'Pick session' })
