@@ -214,7 +214,7 @@ require('lazy').setup({
   -- For example, in the following configuration, we use:
   --  event = 'VimEnter'
   --
-  -- which loads which-key before all the UI elements are loaded. Events can be
+  -- which loads nhich-key before all the UI elements are loaded. Events can be
   -- normal autocommands events (`:help autocmd-events`).
   --
   -- Then, because we use the `opts` key (recommended), the configuration runs
@@ -283,6 +283,7 @@ require('lazy').setup({
         { "<leader>'", group = 'Grapple' },
         { '<leader>.', group = 'Scratch Buffer' },
         { '<leader>b', group = 'Buffer' },
+        { '<leader>m', group = 'Manage Sessions' },
       },
     },
   },
@@ -880,6 +881,19 @@ require('lazy').setup({
 
       -- require('mini.starter').setup()
       require('mini.sessions').setup()
+
+      vim.keymap.set('n', '<leader>ms', function()
+        MiniSessions.write()
+      end, { desc = 'Save session' })
+      vim.keymap.set('n', '<leader>ml', function()
+        MiniSessions.read()
+      end, { desc = 'Load session' })
+      vim.keymap.set('n', '<leader>md', function()
+        MiniSessions.delete()
+      end, { desc = 'Delete session' })
+      vim.keymap.set('n', '<leader>mp', function()
+        MiniSessions.select()
+      end, { desc = 'Pick session' })
     end,
   },
 
