@@ -21,6 +21,8 @@ vim.g.have_nerd_font = true
 -- Make line numbers default
 vim.o.number = true
 vim.o.relativenumber = true
+vim.api.nvim_set_option('tabstop', 4)
+vim.api.nvim_set_option('shiftwidth', 4)
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
 -- vim.o.relativenumber = true
@@ -44,7 +46,6 @@ vim.o.breakindent = true
 
 -- Save undo history
 vim.o.undofile = true
-
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -72,7 +73,7 @@ vim.o.splitbelow = true
 --   and `:help lua-options-guide`
 vim.o.list = true
 -- vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-vim.opt.listchars = { tab = '│  ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = { tab = '│ ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live, as you type!
 vim.o.inccommand = 'split'
@@ -884,13 +885,20 @@ require('lazy').setup({
         force = { delete = true },
       }
 
+      -- Create a new global session
       vim.keymap.set('n', '<leader>ms', function()
-        local name = vim.fn.input 'New session name: '
+        local name = vim.fn.input 'New global session name: '
         if name ~= '' then
           MiniSessions.write(name)
         end
-      end, { desc = 'Save new session' })
+      end, { desc = 'Save new global session' })
 
+      -- Create a local session for current directory
+      vim.keymap.set('n', '<leader>mS', function()
+        MiniSessions.write 'Session.vim'
+      end, { desc = 'Save local session' })
+
+      -- Write/overwrite current session
       vim.keymap.set('n', '<leader>mw', function()
         if vim.v.this_session == '' then
           local name = vim.fn.input 'Session name: '
@@ -916,11 +924,14 @@ require('lazy').setup({
     end,
   },
 
-  { -- Highlight, edit, and navigate code
+  {
+    -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
-
     build = ':TSUpdate',
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+    },
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
       ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
@@ -934,6 +945,58 @@ require('lazy').setup({
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
+
+      -- Textobjects configuration
+      textobjects = {
+        swap = {
+          enable = true,
+          swap_next = {
+            ['<C-A-l>'] = '@parameter.inner',
+          },
+          swap_previous = {
+            ['<C-A-h>'] = '@parameter.inner',
+          },
+        },
+        select = {
+          enable = true,
+          lookahead = true, -- Automatically jump forward to textobj
+          keymaps = {
+            -- You can use the capture groups defined in textobjects.scm
+            ['af'] = '@function.outer',
+            ['if'] = '@function.inner',
+            ['ac'] = '@class.outer',
+            ['ic'] = '@class.inner',
+            ['aa'] = '@parameter.outer',
+            ['ia'] = '@parameter.inner',
+            ['ab'] = '@block.outer',
+            ['ib'] = '@block.inner',
+          },
+        },
+        move = {
+          enable = true,
+          set_jumps = true, -- whether to set jumps in the jumplist
+          goto_next_start = {
+            [']f'] = '@function.outer',
+            [']c'] = '@class.outer',
+            [']a'] = '@parameter.inner',
+          },
+          goto_next_end = {
+            [']F'] = '@function.outer',
+            [']C'] = '@class.outer',
+            [']A'] = '@parameter.inner',
+          },
+          goto_previous_start = {
+            ['[f'] = '@function.outer',
+            ['[c'] = '@class.outer',
+            ['[a'] = '@parameter.inner',
+          },
+          goto_previous_end = {
+            ['[F'] = '@function.outer',
+            ['[C'] = '@class.outer',
+            ['[A'] = '@parameter.inner',
+          },
+        },
+      },
     },
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
