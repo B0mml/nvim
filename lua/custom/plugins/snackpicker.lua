@@ -510,7 +510,7 @@ return {
               vim.cmd 'Copilot disable'
             end
           end,
-        }):map '<leader>cp'
+        }):map '<leader>ap'
         -- Alternative if is_enabled() doesn't exist
         Snacks.toggle({
           name = 'Hardtime',

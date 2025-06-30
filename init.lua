@@ -21,8 +21,8 @@ vim.g.have_nerd_font = true
 -- Make line numbers default
 vim.o.number = true
 vim.o.relativenumber = true
-vim.api.nvim_set_option('tabstop', 4)
-vim.api.nvim_set_option('shiftwidth', 4)
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
 -- vim.o.relativenumber = true
@@ -97,8 +97,14 @@ vim.o.confirm = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>qo', vim.diagnostic.setloclist, { desc = 'Diagnostics to location list' })
-vim.keymap.set('n', '<leader>qd', vim.diagnostic.setqflist, { desc = 'Diagnostics to quickfix' })
+vim.keymap.set('n', '<leader>qo', function()
+  vim.diagnostic.setloclist()
+  vim.cmd 'lopen' -- open location list (triggers FileType qf)
+end, { desc = 'Diagnostics to location list' })
+vim.keymap.set('n', '<leader>qd', function()
+  vim.diagnostic.setqflist()
+  vim.cmd 'copen' -- open quickfix list
+end, { desc = 'Diagnostics to quickfix' })
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
@@ -280,7 +286,8 @@ require('lazy').setup({
         { '<leader>3', hidden = true },
         { '<leader>4', hidden = true },
         { '<leader>q', group = 'Quickfix' },
-        { '<leader>c', group = 'Copilot' },
+        { '<leader>a', group = 'AI' },
+        { '<leader>c', group = 'Code Actions' },
         { "<leader>'", group = 'Grapple' },
         { '<leader>.', group = 'Scratch Buffer' },
         { '<leader>b', group = 'Buffer' },
@@ -371,11 +378,11 @@ require('lazy').setup({
 
           -- Rename the variable under your cursor.
           --  Most Language Servers support renaming across files, etc.
-          map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
+          map('<leader>cr', vim.lsp.buf.rename, 'Rename Variable')
 
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
-          map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
+          map('<leader>ca', vim.lsp.buf.code_action, 'Code Actions', { 'n', 'x' })
 
           -- Find references for the word under your cursor.
 
@@ -388,7 +395,7 @@ require('lazy').setup({
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
-          map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+          -- map('<Leader>cD', vim.lsp.buf.declaration, 'Goto Declaration')
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.

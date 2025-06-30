@@ -130,9 +130,9 @@ return {
         -- No model specification - use Copilot's default
       }
 
-      vim.keymap.set('n', '<leader>cc', '<cmd>CodeCompanionChat<cr>', { desc = 'CodeCompanion Chat' })
-      vim.keymap.set('n', '<leader>ci', '<cmd>CodeCompanion<cr>', { desc = 'CodeCompanion Inline' })
-      vim.keymap.set('n', '<leader>ca', '<cmd>CodeCompanionActions<cr>', { desc = 'CodeCompanion Actions' })
+      vim.keymap.set('n', '<leader>ac', '<cmd>CodeCompanionChat<cr>', { desc = 'CodeCompanion Chat' })
+      vim.keymap.set('n', '<leader>ai', '<cmd>CodeCompanion<cr>', { desc = 'CodeCompanion Inline' })
+      vim.keymap.set('n', '<leader>aa', '<cmd>CodeCompanionActions<cr>', { desc = 'CodeCompanion Actions' })
     end,
   },
 

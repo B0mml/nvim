@@ -15,6 +15,7 @@ return {
     lazy = false,
     priority = 1000,
   },
+  { 'EdenEast/nightfox.nvim' },
 
   -- vim.cmd.colorscheme 'kanagawa-paper',
 }
