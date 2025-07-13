@@ -35,8 +35,10 @@
   "quicker.nvim": { "branch": "master", "commit": "51d3926f183c2d98fbc237cc237ae0926839af3a" },
   "smart-splits.nvim": { "branch": "master", "commit": "039b1c280b849cc23190e94285083af9c2020596" },
   "snacks.nvim": { "branch": "main", "commit": "bc0630e43be5699bb94dadc302c0d21615421d93" },
+  "store.nvim": { "branch": "main", "commit": "8be846e09ed4a857f13b9e6b7f4ed5354ae38056" },
   "todo-comments.nvim": { "branch": "main", "commit": "304a8d204ee787d2544d8bc23cd38d2f929e7cc5" },
   "tokyonight.nvim": { "branch": "main", "commit": "057ef5d260c1931f1dffd0f052c685dcd14100a3" },
   "undotree": { "branch": "master", "commit": "b951b87b46c34356d44aa71886aecf9dd7f5788a" },
+  "vim-coach.nvim": { "branch": "master", "commit": "ed31e7b9450691199288180a922d8166ae11a0b9" },
   "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" }
 }
