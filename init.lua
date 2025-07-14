@@ -276,7 +276,7 @@ require('lazy').setup({
       spec = {
         { '<leader>s', group = 'Search' },
         { '<leader>f', group = 'Find' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+        { '<leader>h', group = 'Git Hunk', mode = { 'n', 'v' } },
         -- { '<leader>x', group = 'Trouble' },
         { '<leader>u', group = 'User Interface' },
         { '<leader>v', group = 'LÖVE' },
