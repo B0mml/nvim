@@ -37,9 +37,7 @@ vim.o.showmode = false
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.schedule(function()
-  vim.o.clipboard = 'unnamedplus'
-end)
+vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -143,9 +141,7 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function()
-    vim.hl.on_yank()
-  end,
+  callback = function() vim.hl.on_yank() end,
 })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
@@ -154,9 +150,7 @@ local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
   local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
-  if vim.v.shell_error ~= 0 then
-    error('Error cloning lazy.nvim:\n' .. out)
-  end
+  if vim.v.shell_error ~= 0 then error('Error cloning lazy.nvim:\n' .. out) end
 end
 
 ---@type vim.Option
@@ -285,6 +279,10 @@ require('lazy').setup({
         { '<leader>2', hidden = true },
         { '<leader>3', hidden = true },
         { '<leader>4', hidden = true },
+        { '<leader>5', hidden = true },
+        { '<leader>6', hidden = true },
+        { '<leader>7', hidden = true },
+        { '<leader>8', hidden = true },
         { '<leader>q', group = 'Quickfix' },
         { '<leader>a', group = 'AI' },
         { '<leader>c', group = 'Code Actions' },
@@ -582,9 +580,7 @@ require('lazy').setup({
     keys = {
       {
         '<leader>bf',
-        function()
-          require('conform').format { async = true, lsp_format = 'fallback' }
-        end,
+        function() require('conform').format { async = true, lsp_format = 'fallback' } end,
         mode = '',
         desc = 'Format buffer',
       },
@@ -635,9 +631,7 @@ require('lazy').setup({
           -- Build Step is needed for regex support in snippets.
           -- This step is not supported in many windows environments.
           -- Remove the below condition to re-enable on windows.
-          if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
-            return
-          end
+          if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then return end
           return 'make install_jsregexp'
         end)(),
         dependencies = {
@@ -771,9 +765,7 @@ require('lazy').setup({
       -- Custom Copilot section
       local function section_copilot()
         -- Check if Copilot is loaded
-        if not vim.fn.exists '*copilot#Enabled' then
-          return ''
-        end
+        if not vim.fn.exists '*copilot#Enabled' then return '' end
 
         -- Icons for different states
         local icons = {
@@ -815,9 +807,7 @@ require('lazy').setup({
 
       -- Keep your existing location override
       ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return '%2l:%-2v'
-      end
+      statusline.section_location = function() return '%2l:%-2v' end
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
@@ -850,9 +840,7 @@ require('lazy').setup({
 
       -- Toggle function
       vim.keymap.set('n', '-', function()
-        if not require('mini.files').close() then
-          require('mini.files').open()
-        end
+        if not require('mini.files').close() then require('mini.files').open() end
       end, { desc = 'Open File [E]xplorer' })
 
       -- Add cursor wrapping and preview toggle for mini.files
@@ -905,39 +893,27 @@ require('lazy').setup({
       -- Create a new global session
       vim.keymap.set('n', '<leader>ms', function()
         local name = vim.fn.input 'New global session name: '
-        if name ~= '' then
-          MiniSessions.write(name)
-        end
+        if name ~= '' then MiniSessions.write(name) end
       end, { desc = 'Save new global session' })
 
       -- Create a local session for current directory
-      vim.keymap.set('n', '<leader>mS', function()
-        MiniSessions.write 'Session.vim'
-      end, { desc = 'Save local session' })
+      vim.keymap.set('n', '<leader>mS', function() MiniSessions.write 'Session.vim' end, { desc = 'Save local session' })
 
       -- Write/overwrite current session
       vim.keymap.set('n', '<leader>mw', function()
         if vim.v.this_session == '' then
           local name = vim.fn.input 'Session name: '
-          if name ~= '' then
-            MiniSessions.write(name)
-          end
+          if name ~= '' then MiniSessions.write(name) end
         else
           MiniSessions.write()
         end
       end, { desc = 'Write/overwrite session' })
 
-      vim.keymap.set('n', '<leader>ml', function()
-        MiniSessions.read()
-      end, { desc = 'Load session' })
+      vim.keymap.set('n', '<leader>ml', function() MiniSessions.read() end, { desc = 'Load session' })
 
-      vim.keymap.set('n', '<leader>md', function()
-        MiniSessions.select 'delete'
-      end, { desc = 'Delete session' })
+      vim.keymap.set('n', '<leader>md', function() MiniSessions.select 'delete' end, { desc = 'Delete session' })
 
-      vim.keymap.set('n', '<leader>mp', function()
-        MiniSessions.select()
-      end, { desc = 'Pick session' })
+      vim.keymap.set('n', '<leader>mp', function() MiniSessions.select() end, { desc = 'Pick session' })
     end,
   },
 
