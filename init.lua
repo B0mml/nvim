@@ -4,6 +4,12 @@ vim.keymap.set('n', '<S-CR>', 'O<Esc>')
 vim.keymap.set('n', ']q', ':cnext<CR>')
 vim.keymap.set('n', '[q', ':cprev<CR>')
 
+-- Restore normal <CR> in quickfix list
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'qf',
+  callback = function() vim.keymap.set('n', '<CR>', '<CR>', { buffer = true }) end,
+})
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
