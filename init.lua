@@ -290,6 +290,7 @@ require('lazy').setup({
         { '<leader>.', group = 'Scratch Buffer' },
         { '<leader>b', group = 'Buffer' },
         { '<leader>m', group = 'Manage Sessions' },
+        { '<leader>x', group = 'Trouble' },
       },
     },
   },
