@@ -1,15 +1,13 @@
 -- CUSTOM KEYBINDS
-vim.keymap.set('n', '<CR>', 'o<Esc>')
-vim.keymap.set('n', '<S-CR>', 'O<Esc>')
+-- vim.keymap.set('n', '<CR>', 'o<Esc>')
+-- vim.keymap.set('n', '<S-CR>', 'O<Esc>')
 vim.keymap.set('n', ']q', ':cnext<CR>')
 vim.keymap.set('n', '[q', ':cprev<CR>')
-
 -- Restore normal <CR> in quickfix list
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'qf',
   callback = function() vim.keymap.set('n', '<CR>', '<CR>', { buffer = true }) end,
 })
-
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -645,14 +643,19 @@ require('lazy').setup({
           -- `friendly-snippets` contains a variety of premade snippets.
           --    See the README about individual language/framework/plugin snippets:
           --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
+          {
+            'rafamadriz/friendly-snippets',
+            config = function() require('luasnip.loaders.from_vscode').lazy_load() end,
+          },
         },
         opts = {},
+        config = function()
+          -- Load friendly snippets first
+          require('luasnip.loaders.from_vscode').lazy_load()
+
+          -- Then load your custom snippets
+          require 'custom.snippets'
+        end,
       },
       'folke/lazydev.nvim',
     },
@@ -721,7 +724,6 @@ require('lazy').setup({
       signature = { enabled = true },
     },
   },
-
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
     -- change the command in the config to whatever the name of that colorscheme is.
@@ -1027,7 +1029,6 @@ require('lazy').setup({
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   { import = 'custom.plugins' },
-  --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
   -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
@@ -1054,5 +1055,20 @@ require('lazy').setup({
   },
 })
 
+-- NEOVIDE settings
+if vim.g.neovide then
+  vim.g.neovide_fullscreen = false
+  vim.g.neovide_hide_mouse_when_typing = true
+  vim.g.neovide_refresh_rate = 144
+
+  local function toggle_neovide_fullscreen()
+    vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen
+    print('Neovide fullscreen: ' .. (vim.g.neovide_fullscreen and 'ON' or 'OFF'))
+  end
+
+  vim.keymap.set('n', '<leader>uF', toggle_neovide_fullscreen, {
+    desc = 'Toggle Neovide fullscreen',
+  })
+end
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

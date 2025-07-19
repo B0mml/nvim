@@ -97,4 +97,24 @@ return {
       vim.keymap.set('n', '<leader>aa', '<cmd>CodeCompanionActions<cr>', { desc = 'CodeCompanion Actions' })
     end,
   },
+  {
+    'shortcuts/no-neck-pain.nvim',
+    config = function()
+      require('no-neck-pain').setup {
+        -- Your configuration options here
+      }
+
+      -- Simple toggle function with feedback
+      local function toggle_no_neck_pain()
+        vim.cmd 'NoNeckPain'
+        -- The plugin doesn't expose state easily, so we'll use a simple message
+        print 'No Neck Pain toggled'
+      end
+
+      -- Map to <leader>un
+      vim.keymap.set('n', '<leader>un', toggle_no_neck_pain, {
+        desc = 'Toggle No Neck Pain',
+      })
+    end,
+  },
 }
