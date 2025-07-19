@@ -3,11 +3,23 @@
 -- vim.keymap.set('n', '<S-CR>', 'O<Esc>')
 vim.keymap.set('n', ']q', ':cnext<CR>')
 vim.keymap.set('n', '[q', ':cprev<CR>')
+
+-- Set PowerShell as default shell for Windows
+if vim.fn.has 'win32' == 1 then
+  vim.o.shell = 'powershell'
+  vim.o.shellcmdflag =
+    "-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues['Out-File:Encoding']='utf8';Remove-Alias -Force -ErrorAction SilentlyContinue tee;"
+  vim.o.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
+  vim.o.shellpipe = '2>&1 | %%{ "$_" } | Tee-Object %s; exit $LastExitCode'
+  vim.o.shellquote = ''
+  vim.o.shellxquote = ''
+end
+
 -- Restore normal <CR> in quickfix list
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'qf',
-  callback = function() vim.keymap.set('n', '<CR>', '<CR>', { buffer = true }) end,
-})
+-- vim.api.nvim_create_autocmd('FileType', {
+--   pattern = 'qf',
+--   callback = function() vim.keymap.set('n', '<CR>', '<CR>', { buffer = true }) end,
+-- })
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
