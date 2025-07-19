@@ -1070,7 +1070,7 @@ if vim.g.neovide then
     desc = 'Toggle Neovide fullscreen',
   })
 
-  vim.cmd.colorscheme 'tokyonight'
+  vim.cmd.colorscheme 'tokyonight-storm'
 end
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
