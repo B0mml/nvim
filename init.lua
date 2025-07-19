@@ -911,13 +911,13 @@ require('lazy').setup({
       }
 
       -- Create a new global session
-      vim.keymap.set('n', '<leader>ms', function()
+      vim.keymap.set('n', '<leader>mS', function()
         local name = vim.fn.input 'New global session name: '
         if name ~= '' then MiniSessions.write(name) end
       end, { desc = 'Save new global session' })
 
       -- Create a local session for current directory
-      vim.keymap.set('n', '<leader>mS', function() MiniSessions.write 'Session.vim' end, { desc = 'Save local session' })
+      vim.keymap.set('n', '<leader>ms', function() MiniSessions.write 'Session.vim' end, { desc = 'Save local session' })
 
       -- Write/overwrite current session
       vim.keymap.set('n', '<leader>mw', function()
