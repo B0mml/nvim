@@ -23,7 +23,7 @@ end
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.maplocalleader = ','
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
@@ -289,18 +289,9 @@ require('lazy').setup({
         { '<leader>u', group = 'User Interface' },
         { '<leader>v', group = 'LÖVE' },
         { '<leader>g', group = 'Git' },
-        { '<leader>1', hidden = true },
-        { '<leader>2', hidden = true },
-        { '<leader>3', hidden = true },
-        { '<leader>4', hidden = true },
-        { '<leader>5', hidden = true },
-        { '<leader>6', hidden = true },
-        { '<leader>7', hidden = true },
-        { '<leader>8', hidden = true },
         { '<leader>q', group = 'Quickfix' },
         { '<leader>a', group = 'AI' },
         { '<leader>c', group = 'Code Actions' },
-        { "<leader>'", group = 'Grapple' },
         { '<leader>.', group = 'Scratch Buffer' },
         { '<leader>b', group = 'Buffer' },
         { '<leader>m', group = 'Manage Sessions' },

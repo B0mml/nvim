@@ -27,6 +27,10 @@ return {
     priority = 1000,
   },
   { 'EdenEast/nightfox.nvim' },
+  {
+    'AlexvZyl/nordic.nvim',
+  },
+  { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
 
   { 'diegoulloao/neofusion.nvim', priority = 1000, config = true, opts = ... },
   -- vim.cmd.colorscheme 'kanagawa-paper',
