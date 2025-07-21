@@ -16,7 +16,6 @@ return {
     'nvim-lua/plenary.nvim',
     'snacks.nvim',
     'Saghen/blink.cmp',
-
     -- see above for full list of optional dependencies ☝️
   },
   ---@module 'obsidian'
@@ -28,7 +27,6 @@ return {
         path = '~/Documents/My Vault/',
       },
     },
-
     -- see below for full list of options 👇
     completion = {
       nvim_cmp = false,
@@ -36,4 +34,27 @@ return {
       min_chars = 2,
     },
   },
+  config = function(_, opts)
+    require('obsidian').setup(opts)
+
+    -- Keymaps are only created when the plugin loads
+    -- Normal mode keymaps
+    vim.keymap.set('n', '<leader>oo', '<cmd>ObsidianOpen<CR>', { desc = 'Open in Obsidian app' })
+    vim.keymap.set('n', '<leader>oq', '<cmd>ObsidianQuickSwitch<CR>', { desc = 'Quick switch note' })
+    vim.keymap.set('n', '<leader>on', '<cmd>ObsidianNew<CR>', { desc = 'Create new note' })
+    vim.keymap.set('n', '<leader>ot', '<cmd>ObsidianToday<CR>', { desc = "Today's daily note" })
+    vim.keymap.set('n', '<leader>oy', '<cmd>ObsidianYesterday<CR>', { desc = "Yesterday's daily note" })
+    vim.keymap.set('n', '<leader>ob', '<cmd>ObsidianBacklinks<CR>', { desc = 'Show backlinks' })
+    vim.keymap.set('n', '<leader>os', '<cmd>ObsidianSearch<CR>', { desc = 'Search vault' })
+    vim.keymap.set('n', '<leader>ol', '<cmd>ObsidianLink<CR>', { desc = 'Link visual text to note' })
+    vim.keymap.set('n', '<leader>of', '<cmd>ObsidianFollowLink<CR>', { desc = 'Follow link under cursor' })
+    vim.keymap.set('n', '<leader>ow', '<cmd>ObsidianWorkspace<CR>', { desc = 'Switch workspace' })
+    vim.keymap.set('n', '<leader>od', '<cmd>ObsidianDailies<CR>', { desc = 'Browse daily notes' })
+    vim.keymap.set('n', '<leader>otc', '<cmd>ObsidianTOC<CR>', { desc = 'Table of contents' })
+
+    -- Visual mode keymaps
+    vim.keymap.set('v', '<leader>ox', ':ObsidianExtractNote<CR>', { desc = 'Extract selection to new note' })
+    vim.keymap.set('v', '<leader>ol', ':ObsidianLink<CR>', { desc = 'Link visual text' })
+    vim.keymap.set('v', '<leader>on', ':ObsidianLinkNew<CR>', { desc = 'Create and link new note from selection' })
+  end,
 }
