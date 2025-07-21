@@ -27,6 +27,6 @@ return {
     priority = 1000,
   },
   { 'EdenEast/nightfox.nvim' },
-
+  { 'diegoulloao/neofusion.nvim', priority = 1000, config = true, opts = ... },
   -- vim.cmd.colorscheme 'kanagawa-paper',
 }
