@@ -303,6 +303,40 @@ return {
       desc = 'Select Scratch Buffer',
     },
     {
+      '<leader>.D',
+      function()
+        local scratch_files = Snacks.scratch.list()
+
+        vim.ui.select(scratch_files, {
+          prompt = 'Delete scratch buffer:',
+          format_item = function(item)
+            local parts = {}
+
+            -- Show the working directory where the scratch was created
+            if item.cwd then
+              local home = vim.fn.expand '~'
+              local display_cwd = item.cwd:gsub('^' .. vim.pesc(home), '~')
+              table.insert(parts, display_cwd)
+            end
+
+            -- Add "scratch"
+            table.insert(parts, 'scratch')
+
+            -- Add branch info if available
+            if item.branch then table.insert(parts, 'branch:' .. item.branch) end
+
+            return table.concat(parts, '/')
+          end,
+        }, function(choice)
+          if choice then
+            vim.fn.delete(choice.file)
+            print 'Deleted scratch buffer'
+          end
+        end)
+      end,
+      desc = 'Delete Scratch Buffer',
+    },
+    {
       '<leader>bd',
       function() Snacks.bufdelete() end,
       desc = 'Delete Buffer',
