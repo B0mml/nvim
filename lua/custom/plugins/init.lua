@@ -8,9 +8,9 @@ return {
     event = 'VeryLazy',
     opts = {
       path_to_love_library = '', -- Disable built-in LSP annotations
-      debug_window_opts = {
-        split = 'below',
-      },
+      -- debug_window_opts = {
+      --   split = 'below',
+      -- },
     },
     keys = {
       { '<leader>v', ft = 'lua', desc = 'LÖVE' },

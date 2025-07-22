@@ -830,7 +830,6 @@ require('lazy').setup({
           width_nofocus = 15,
           width_preview = 60,
         },
-
         -- Custom mappings
         mappings = {
           close = 'q',
@@ -848,30 +847,32 @@ require('lazy').setup({
           trim_right = '>',
         },
       }
-
       -- Toggle function
       vim.keymap.set('n', '-', function()
         if not require('mini.files').close() then require('mini.files').open() end
       end, { desc = 'Open File [E]xplorer' })
-
       -- Add cursor wrapping and preview toggle for mini.files
       vim.api.nvim_create_autocmd('User', {
         pattern = 'MiniFilesBufferCreate',
         callback = function(args)
           local buf_id = args.data.buf_id
-
+          -- Enter key to open file and close mini.files
+          vim.keymap.set(
+            'n',
+            '<CR>',
+            function() require('mini.files').go_in { close_on_file = true } end,
+            { buffer = buf_id, desc = 'Open file and close explorer' }
+          )
           -- Toggle preview with 'p' key
-          vim.keymap.set('n', 'p', function()
+          vim.keymap.set('n', 'P', function()
             local config = require('mini.files').config
             config.windows.preview = not config.windows.preview
             require('mini.files').refresh { windows = { preview = config.windows.preview } }
           end, { buffer = buf_id, desc = 'Toggle preview' })
-
           -- Enable cursor wrapping for j/k navigation
           vim.keymap.set('n', 'j', function()
             local line = vim.api.nvim_win_get_cursor(0)[1]
             local total_lines = vim.api.nvim_buf_line_count(buf_id)
-
             if line >= total_lines then
               -- At bottom, wrap to top
               vim.api.nvim_win_set_cursor(0, { 1, 0 })
@@ -880,10 +881,8 @@ require('lazy').setup({
               vim.cmd 'normal! j'
             end
           end, { buffer = buf_id, desc = 'Move down (with wrap)' })
-
           vim.keymap.set('n', 'k', function()
             local line = vim.api.nvim_win_get_cursor(0)[1]
-
             if line <= 1 then
               -- At top, wrap to bottom
               local total_lines = vim.api.nvim_buf_line_count(buf_id)
