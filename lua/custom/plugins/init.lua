@@ -18,7 +18,23 @@ return {
       { '<leader>vs', '<cmd>LoveStop<cr>', ft = 'lua', desc = 'Stop LÖVE' },
       {
         '<leader>vd',
-        '<cmd>LoveRun<cr>',
+        function()
+          if vim.fn.has 'win32' == 1 then
+            local snacks = require 'snacks'
+            snacks.terminal.open('lovec .', {
+              win = {
+                position = 'bottom',
+                height = 0.3,
+              },
+              cwd = vim.fn.getcwd(),
+              auto_close = false,
+              start_insert = false,
+              auto_insert = false,
+            })
+          else
+            vim.cmd 'LoveRun'
+          end
+        end,
         ft = 'lua',
         desc = 'Run LÖVE with debug console',
       },
