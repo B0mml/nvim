@@ -10,9 +10,9 @@ return {
     vim.keymap.set('n', '<C-l>', require('smart-splits').move_cursor_right)
 
     -- resizing
-    vim.keymap.set('n', '<C-S-H>', require('smart-splits').resize_left)
-    vim.keymap.set('n', '<C-S-J>', require('smart-splits').resize_down)
-    vim.keymap.set('n', '<C-S-K>', require('smart-splits').resize_up)
-    vim.keymap.set('n', '<C-S-L>', require('smart-splits').resize_right)
+    vim.keymap.set('n', '<S-Left>', require('smart-splits').resize_left)
+    vim.keymap.set('n', '<S-Down>', require('smart-splits').resize_down)
+    vim.keymap.set('n', '<S-Up>', require('smart-splits').resize_up)
+    vim.keymap.set('n', '<S-Right>', require('smart-splits').resize_right)
   end,
 }
