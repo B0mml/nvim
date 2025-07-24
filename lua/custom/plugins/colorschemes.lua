@@ -1,6 +1,10 @@
 return {
-
-  { 'rebelot/kanagawa.nvim', lazy = false, priority = 1000, opts = {} },
+  {
+    'rebelot/kanagawa.nvim',
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
   {
     'thesimonho/kanagawa-paper.nvim',
     lazy = false,
@@ -8,7 +12,7 @@ return {
     -- init = function()
     --   vim.cmd.colorscheme 'kanagawa-paper-ink'
     -- end,
-    opts = { ... },
+    opts = {},
   },
   {
     'navarasu/onedark.nvim',
@@ -18,7 +22,7 @@ return {
         style = 'darker',
       }
       -- Enable theme
-      require('onedark').load()
+      -- require('onedark').load()
     end,
   },
   {
@@ -26,12 +30,26 @@ return {
     lazy = false,
     priority = 1000,
   },
-  { 'EdenEast/nightfox.nvim' },
+  {
+    'EdenEast/nightfox.nvim',
+  },
   {
     'AlexvZyl/nordic.nvim',
   },
-  { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
-
-  { 'diegoulloao/neofusion.nvim', priority = 1000, config = true, opts = ... },
-  -- vim.cmd.colorscheme 'kanagawa-paper',
+  {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    priority = 1000,
+    config = function()
+      -- require('catppuccin').setup {
+      --   transparent_background = true,
+      -- }
+    end,
+  },
+  {
+    'diegoulloao/neofusion.nvim',
+    priority = 1000,
+    config = true,
+    opts = {},
+  },
 }
