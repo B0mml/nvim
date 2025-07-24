@@ -1,4 +1,7 @@
 return {
+
+  'mrjones2014/smart-splits.nvim',
+  lazy = false,
   config = function()
     require('smart-splits').setup {}
 
@@ -14,5 +17,4 @@ return {
     vim.keymap.set('n', '<S-Up>', require('smart-splits').resize_up)
     vim.keymap.set('n', '<S-Right>', require('smart-splits').resize_right)
   end,
-  'mrjones2014/smart-splits.nvim',
 }
