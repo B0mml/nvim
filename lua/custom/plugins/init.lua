@@ -3,41 +3,20 @@
 --
 -- See the kickstart.nvim README for more information
 return {
+  -- using lazy.nvim
   {
     'S1M0N38/love2d.nvim',
     event = 'VeryLazy',
+    version = '2.*',
     opts = {
-      path_to_love_library = '', -- Disable built-in LSP annotations
-      -- debug_window_opts = {
-      --   split = 'below',
-      -- },
+      debug_window_opts = {
+        split = 'right',
+      },
     },
     keys = {
       { '<leader>v', ft = 'lua', desc = 'LÖVE' },
       { '<leader>vv', '<cmd>LoveRun<cr>', ft = 'lua', desc = 'Run LÖVE' },
       { '<leader>vs', '<cmd>LoveStop<cr>', ft = 'lua', desc = 'Stop LÖVE' },
-      {
-        '<leader>vd',
-        function()
-          if vim.fn.has 'win32' == 1 then
-            local snacks = require 'snacks'
-            snacks.terminal.open('lovec .', {
-              win = {
-                position = 'bottom',
-                height = 0.3,
-              },
-              cwd = vim.fn.getcwd(),
-              auto_close = false,
-              start_insert = false,
-              auto_insert = false,
-            })
-          else
-            vim.cmd 'LoveRun'
-          end
-        end,
-        ft = 'lua',
-        desc = 'Run LÖVE with debug console',
-      },
     },
   },
 
