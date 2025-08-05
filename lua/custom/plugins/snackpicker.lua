@@ -80,6 +80,11 @@ return {
       function() Snacks.picker.recent() end,
       desc = 'Recent',
     },
+    {
+      '<leader>of',
+      function() Snacks.picker.files { cwd = vim.fn.expand '~/org' } end,
+      desc = 'Find Org Files',
+    },
     -- git
     {
       '<leader>gb',

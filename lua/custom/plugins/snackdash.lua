@@ -55,13 +55,13 @@ return {
       },
       sections = {
         { section = 'header' },
-        {
-          pane = 2,
-          section = 'terminal',
-          cmd = 'powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:\\Users\\ludei\\scripts\\colorblocks.ps1"',
-          height = 5,
-          padding = 1,
-        },
+        -- {
+        --   pane = 2,
+        --   section = 'terminal',
+        --   cmd = 'powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:\\Users\\ludei\\scripts\\colorblocks.ps1"',
+        --   height = 5,
+        --   padding = 1,
+        -- },
         { section = 'keys', gap = 1, padding = 1 },
         {
           pane = 2,
