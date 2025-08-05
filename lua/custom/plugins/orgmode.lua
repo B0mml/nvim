@@ -10,7 +10,7 @@ return {
       -- Setup orgmode
       require('orgmode').setup {
         org_agenda_files = '~/org/*',
-        org_default_notes_file = '~/org/inbox.org',
+        org_default_notes_file = '~/org/refile.org',
 
         -- Hide emphasis markers (optional - hides *bold* /italic/ markers)
         org_hide_emphasis_markers = true,
