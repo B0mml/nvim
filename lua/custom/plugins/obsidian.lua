@@ -55,10 +55,51 @@ return {
       },
     },
 
+    -- Don't add id to frontmatter, preserve created from template
+    note_frontmatter_func = function(note)
+      local out = {}
+
+      -- Keep aliases
+      if note.aliases and #note.aliases > 0 then
+        out.aliases = note.aliases
+      else
+        out.aliases = {}
+      end
+
+      -- Keep tags
+      if note.tags and #note.tags > 0 then
+        out.tags = note.tags
+      else
+        out.tags = {}
+      end
+
+      -- Preserve created field if it exists (from template)
+      if note.metadata and note.metadata.created then out.created = note.metadata.created end
+
+      return out
+    end,
+
     completion = {
       nvim_cmp = false,
       blink = true,
       min_chars = 2,
+    },
+
+    -- Use tab for folding in markdown files
+    mappings = {
+      -- Enable tab for fold toggle
+      ['<tab>'] = {
+        action = function()
+          if vim.fn.foldlevel '.' > 0 then
+            if vim.fn.foldclosed '.' == -1 then
+              vim.cmd 'foldclose'
+            else
+              vim.cmd 'foldopen'
+            end
+          end
+        end,
+        opts = { buffer = true },
+      },
     },
   },
   config = function(_, opts)
