@@ -1,3 +1,7 @@
+# IMPORTANT!
+I manange my dotfiles (including nvim) in a dotfiles repo now:
+https://github.com/B0mml/Dotfiles
+
 # kickstart.nvim
 
 ## Introduction
